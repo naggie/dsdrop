@@ -1,1 +1,38 @@
+domain          : drop.darksky.io
+# Directory for hashbin (attempt to create)
+data_dir        : /srv/drop
 
+# Temporary directory to upload files to (not if I can help it)
+tmp_dir         : /tmp/drop
+
+# Target disk usage. LRU GC will be used.
+quota           : 300GB
+
+# ...to listen on (override with PORT/IP env var)
+port            : 80
+ip              : 0.0.0.0
+
+
+# per upload...
+#max_filesize    : 5GB
+#
+## --- not implemented below this line, not sure if needed  ---
+#default_protocol : http #s
+## HTTPS (via proxy or native)
+#key              :
+#cacrt            :
+#
+## how many credits to charge for successful uploads/downloads (per file, not per GB?)
+## set to zero to disable
+#download_static_cost    : 1
+#upload_static_cost      : 10
+## pr GB (or perhaps inverse)
+#download_dynamic_cost   : 0
+#upload_dynamic_cost     : 0
+#
+## Default amount of credits for new account
+#initial_credits : 20
+#
+## default max storage per user
+#user_quota       : 100GB
+#

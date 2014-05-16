@@ -31,7 +31,7 @@
     "dsdrop-server": "./server.js",
     "dsdrop": "./drop.js",
     "dsdrop-dumplogs": "./dumplogs.js",
-    "dsdrop-token": "./token.js",
+    "dsdrop-token": "./token.js"
   },
   "preferGlobal": true,
   "engines": {
