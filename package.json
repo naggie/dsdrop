@@ -1,0 +1,41 @@
+{
+  "name": "dsdrop",
+  "homepage": "https://github.com/naggie/dsdrop",
+  "description": "One click file sharing",
+  "keywords": [
+    "sharing"
+  ],
+  "version": "0.0.1",
+  "author": "Callan Bryant <callan.bryant@gmail.com> (http://callanbryant.co.uk/)",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "colors": "^0.6.2",
+    "socket.io": "^0.9.16",
+    "restify": "^2.8.0",
+    "socket.io-client": "^0.9.16"
+  },
+  "devDependencies": {
+    "uglify-js": "*"
+  },
+  "bugs": {
+    "url": "https://github.com/naggie/DSPA/issues"
+  },
+  "license": "Apache",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/naggie/DSPA.git"
+  },
+  "bin": {
+    "dsdrop-server": "./server.js",
+    "dsdrop": "./drop.js",
+    "dsdrop-dumplogs": "./dumplogs.js",
+    "dsdrop-token": "./token.js",
+  },
+  "preferGlobal": true,
+  "engines": {
+    "node": ">=0.8"
+  },
+  "private": true
+}
