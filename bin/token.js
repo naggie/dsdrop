@@ -21,7 +21,7 @@
 
 var program = require('commander')
 var rclient = require('redis').createClient()
-var apiauth = require('./apiauth').init(rclient)
+var apiauth = require('../lib/tokenauth').init(rclient)
 var printf  = require('printf')
 
 program

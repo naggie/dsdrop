@@ -14,7 +14,11 @@
     "colors": "^0.6.2",
     "socket.io": "^0.9.16",
     "restify": "^2.8.0",
-    "socket.io-client": "^0.9.16"
+    "socket.io-client": "^0.9.16",
+    "redis": "^0.10.1",
+    "hiredis": "^0.1.16",
+    "commander": "^2.2.0",
+    "printf": "^0.2.0"
   },
   "devDependencies": {
     "uglify-js": "*"
