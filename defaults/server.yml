@@ -3,7 +3,7 @@ domain          : drop.darksky.io
 data_dir        : /srv/drop
 
 # Temporary directory to upload files to (not if I can help it)
-tmp_dir         : /tmp/drop
+tmp_dir         : /srv/drop/tmp
 
 # Target disk usage. LRU GC will be used.
 quota           : 300GB
