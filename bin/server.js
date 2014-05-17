@@ -46,17 +46,20 @@ server.use(restify.jsonp())
 
 
 // file download!
+// TODO: html/text disposition inline?
 // /srv/drop/9c/462c047e22df523d20df9e8626ff009d6031d3.bin
 server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 	var token = req.params[0]
 
 	// headers (mime type, size)
+	res.header('Content-Length',702)
+	res.header('Content-Type:','text/plain')
+	res.header('Content-Disposition',"attachment; filename=beans.txt")
+
 	// stream file
 	var stream = fs.createReadStream('/srv/drop/9c/462c047e22df523d20df9e8626ff009d6031d3.bin')
 	stream.pipe(res)
-        stream.on('end', function() {
-		res.end()
-	})
+        stream.on('end',res.end)
 })
 
 // information for dashboard
