@@ -10,7 +10,7 @@ quota           : 300GB
 
 # ...to listen on (override with PORT/IP env var)
 port            : 80
-ip              : 0.0.0.0
+listen          : 0.0.0.0
 
 
 # per upload...

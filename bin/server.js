@@ -15,8 +15,14 @@
    limitations under the License.
 */
 
-var config      = require('./autoconfig')
-var restify     = require('restify')
+var config = require('../lib/autoconfig')//.init(__dirname+'/../default/server.yml')
+//config.override_argv()
+//config.override_maybe()
+
+
+var restify = require('restify')
+var hashbin = require('../lib/hashbin')
+hashbin.root = config.data_dir
 
 var server = restify.createServer({
 	name: 'dsdrop',
@@ -33,97 +39,43 @@ server.use(restify.jsonp())
 //server.use(restify.gzipResponse()); // breaks page load
 
 
-server.get('/zones',function(req,res,next) {
-var zones = ['not','implemented','yet']
-	res.send(200,zones)
-	return next()
-})
-/*
-// announce a `msg` with a `chime` on a zone
-server.post('/:zone',function(req,res,next) {
-	var success = aggregator.publish(req.params.id)
-	res.send(success?200:404,{success:success})
-	return next()
+// file download!
+server.get(/[A-Za-z0-9]{8}/,function(req,res,next) {
+	var token = req.params[0]
 })
 
-*/
+// information for dashboard
+server.get('/stats',function(req,res,next) {
+})
 
-// announce a `msg` with a `chime`
-server.post('/',function(req,res,next) {
-	if (config.key && req.body.key != config.key) {
-		res.send({
-			success: false,
-			msg: 'Incorrect API key',
-		})
-		return next()
+// file upload!
+server.post('/upload',function(req,res,next) {
+	var file = {
+		path : req.files.filedata.path,
+		name : req.files.filedata.name,
+		size : req.files.filedata.size,
+		mime : req.files.filedata.type,
 	}
 
-	if (!req.body.msg || req.body.msg.length < 2) {
-		res.send({
-			success: false,
-			msg: 'Invalid msg given',
-		})
-		return next()
-	}
-
-	// don't know why, but this is a string
-	if (req.body.personality == 'true' || config.personality)
-		req.body.msg = personality.modify(req.body.msg)
-
-	conductor.broadcast({
-		msg: req.body.msg,
-		chime: req.body.chime || 'belt',
-		zone: req.body.zone,
-		callback: function(client_count,error) {
-			// broadcast,
-			// also send number of clients, etc
-			if (client_count)
-				res.send({
-					success : true,
-					msg     : "Broadcasted to "+client_count+" clients"
-				})
-			else
-				res.send({
-					success :false,
-					msg     :error,
-				})
-
-			return next()
-		},
+	// callback(err,hash,isnew,binpath)
+	hashbin.assimilate(file.path,function(ierr,hash,isnew,binpatg){
+		console.log(arguments)
 	})
+
+	res.send()
+	return next()
 })
 
-server.get('/status',function(req,res,next) {
-	res.send({
-		chimes:conductor.chimes,
-		//zones:conductor.zones,
-	})
-	next()
-})
 
-server.get(/\/chimes\/.+/,restify.serveStatic({
-	// HACK: symlink to chimes in chimes
-	directory:__dirname+'/chimes/',
-	//maxAge:3600,
-}))
-
-// cached rendered TTS
-server.get(/\/[0-9a-f]{32}\.?.+/,restify.serveStatic({
-	directory:__dirname+'/cache/',
-	//maxAge:3600,
-}))
-
-
-// test client
+// web dashboard
 server.get(/.+/,restify.serveStatic({
-	directory:__dirname+'/web/',
+	directory:__dirname+'/../web/',
 	default:'index.html',
 	//maxAge:3600,
 	maxAge:0, // disable cache
 }))
 
 
-conductor.listen(server)
 server.listen(config.port,config.listen, function () {
 	//console.log('%s listening at %s', server.name, server.url)
 })
