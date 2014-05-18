@@ -109,6 +109,7 @@ server.post('/instant-upload',function(req,res,next) {
 				user     : req.identity.name,
 				oneshot  : !!req.body.oneshot,
 				size     : file.size,
+				new      : false,
 			}, function(err,token){
 				if (err) return res.send(500,err)
 				res.send(200,config.url+token)
@@ -119,6 +120,7 @@ server.post('/instant-upload',function(req,res,next) {
 })
 
 // file upload by actual file, assuming the instant upload attempt has just failed
+// file is filedata
 server.post('/full-upload',function(req,res,next) {
 	var uploaded = Object.keys(req.files).length
 	if (!uploaded)
@@ -131,9 +133,9 @@ server.post('/full-upload',function(req,res,next) {
 				name     : req.files.filedata.name,
 				user     : req.identity.name,
 				oneshot  : !!req.body.oneshot,
-				new      : true,
-				size     :  file.size,
-				hash     :  file.hash,
+				new      : file.new,
+				size     : file.size,
+				hash     : file.hash,
 			},function(err,token){
 				if (err) return res.send(500,err)
 				res.send(200,config.url+token)
