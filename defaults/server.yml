@@ -6,7 +6,7 @@ data_dir        : /srv/drop
 tmp_dir         : /srv/drop/tmp
 
 # Target disk usage. LRU GC will be used.
-quota           : 300GB
+#quota           : 300GB
 
 # ...to listen on (override with PORT/IP env var)
 port            : 80

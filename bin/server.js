@@ -46,10 +46,10 @@ mkdirp.sync(config.tmp_dir)
 server.use(restify.acceptParser(server.acceptable))
 server.use(restify.queryParser())
 server.use(restify.bodyParser({
-		// req.body is then JSON content
-		mapParams : false,
-		uploadDir : config.tmp_dir,
-	}))
+	// req.body is then JSON content
+	mapParams : false,
+	uploadDir : config.tmp_dir,
+}))
 server.use(restify.jsonp())
 
 
@@ -80,10 +80,13 @@ server.get('/stats',function(req,res,next) {
 })
 
 // authentication, match uploads only
-server.post(/upload/,function(req,res,next) {
+server.use(function(req,res,next) {
+	if (!req.url.match(/upload/)) return next()
+
 	tokenauth.authenticate(req.body.token,function(err,identity) {
 		if (err) return res.send(403,err)
 		req.identity = identity
+		return next()
 	})
 })
 
@@ -91,27 +94,32 @@ server.post(/upload/,function(req,res,next) {
 // Assumes server already has file. If not, this will fail with 404 and client
 // must attempt a full-upload
 server.post('/instant-upload',function(req,res,next) {
-	var file = {
+	var instance = {
 		hash     : req.body.hash,
 		name     : req.body.name,
-		size     : req.body.size,
-		mime     : req.body.mime, // can be guessed form extension
+		user     : req.identity.name,
+		oneshot  : !!req.body.oneshot,
 	}
 
 	// is it there?
-	hashbin.extract(file.hash,function(err,path) {
+	hashbin.extract(instance.hash,function(err,file) {
 		if (!err) {
-			console.log('Publish instant',file)
+			instance.size = file.size
+			database.add(instance,function(err,token){
+				if (err) return res.send(500,err)
+				res.send(200,'Successful instant upload')
+			})
 		} else
-			res.send(404,'404 file not found: Please send this file.')
+			res.send(404,err)
 	})
-	res.send()
-	return next()
 })
 
 // file upload by actual file, assuming the instant upload attempt has just failed
 server.post('/full-upload',function(req,res,next) {
 	var uploaded = Object.keys(req.files).length
+	if (!uploaded)
+		return req.send(500,'...Upload a file next time...')
+
 	var tmp_path = req.files.filedata.path
 	var file = {
 		// hash is added later by hashbin
