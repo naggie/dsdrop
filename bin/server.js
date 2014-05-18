@@ -65,19 +65,24 @@ server.use(restify.jsonp())
 server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 	var token = req.params[0]
 
+	// instance
 	database.extract(token,function(err,instance) {
 		if (err) return res.send(404,err)
 
-		// headers (mime type, size)
-		res.header('Content-Length',instance.size)
-		res.header('Content-Type:',instance.mimetype)
-		res.header('Content-Disposition',"attachment; filename="+instance.name)
+		hashbin.extract(instance.hash,function(err,file) {
+			if (err) return res.send(404,err)
 
-		// stream file
-		var stream = fs.createReadStream(instance.binpath)
-		// to meter: do on data, record separately, maybe
-		stream.pipe(res)
-		stream.on('end',res.end)
+			// headers (mime type, size)
+			res.header('Content-Length',file.size)
+			res.header('Content-Type:',instance.mimetype)
+			res.header('Content-Disposition',"attachment; filename="+instance.name)
+
+			// stream file
+			var stream = fs.createReadStream(file.binpath)
+			// to meter: do on data, record separately, maybe
+			stream.pipe(res)
+			stream.on('end',res.end)
+		})
 	})
 })
 
