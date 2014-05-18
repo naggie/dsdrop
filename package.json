@@ -20,7 +20,8 @@
     "commander": "^2.2.0",
     "printf": "^0.2.0",
     "mkdirp": "^0.5.0",
-    "js-yaml": "^3.0.2"
+    "js-yaml": "^3.0.2",
+    "request": "^2.35.0"
   },
   "devDependencies": {
     "uglify-js": "*"
