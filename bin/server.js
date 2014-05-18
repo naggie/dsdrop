@@ -31,7 +31,11 @@ var restify   = require('restify')
 var hashbin   = require('../lib/hashbin')
 hashbin.root  = config.data_dir
 var tokenauth = require('../lib/tokenauth').init(rclient)
-var database  = require('../lib/database').init(rclient)
+var database  = require('../lib/database').init({
+	rclient : rclient,
+    	// may as well share same token keyspace with token auth
+	keygen  : tokenauth.generate_valid_unique_key
+})
 
 var server = restify.createServer({
 	name: config.hostname,
@@ -107,7 +111,7 @@ server.post('/instant-upload',function(req,res,next) {
 			instance.size = file.size
 			database.add(instance,function(err,token){
 				if (err) return res.send(500,err)
-				res.send(200,'Successful instant upload')
+				res.send(200,config.url+token)
 			})
 		} else
 			res.send(404,err)
