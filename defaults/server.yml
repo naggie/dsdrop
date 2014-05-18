@@ -1,4 +1,7 @@
-hostname        : drop.darksky.io
+# resultant URL, depending on how you have set up dsdrop.
+# it could be on a different port or protocol if it's through apache proxypass,
+# for example
+url             : http://drop.darksky.io/
 # Directory for hashbin (attempt to create)
 data_dir        : /srv/drop
 
@@ -9,7 +12,7 @@ tmp_dir         : /srv/drop/tmp
 #quota           : 300GB
 
 # ...to listen on (override with PORT/IP env var)
-port            : 80
+port            : 9000
 listen          : 0.0.0.0
 
 
