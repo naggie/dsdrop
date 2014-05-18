@@ -1,4 +1,4 @@
-domain          : drop.darksky.io
+hostname        : drop.darksky.io
 # Directory for hashbin (attempt to create)
 data_dir        : /srv/drop
 
