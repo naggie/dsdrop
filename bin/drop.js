@@ -34,20 +34,36 @@ if (!process.env.TOKEN) {
 	process.exit()
 }
 
-var url      = 'http://localhost:9000/full-upload'
+var url      = 'http://localhost:9000/'
 var filepath = process.argv[2]
 var token    = process.env.TOKEN
 
 var request  = require('request')
 var fs       = require('fs')
+var path     = require('path')
+var hashfile = require('../lib/hashbin').hashfile
 
-var r = request.post(url, function(err, httpResponse, body) {
-	if (err) {
-		return console.error(err)
-	}
-	console.log(JSON.parse(body))
+hashfile(filepath,function(err,hash) {
+	if (err) return console.log(err)
+	var r = request.post(url+'/instant-upload', function(err, httpResponse, body) {
+		if (err) return console.error(err)
+
+		if (httpResponse.statusCode == 404) return fullUpload()
+
+		console.log(JSON.parse(body))
+	})
+	var form = r.form()
+	form.append('token',token)
+	form.append('hash',hash)
+	form.append('name',path.basename(filepath))
 })
-var form = r.form()
-form.append('token',token)
-form.append('filedata', fs.createReadStream(filepath))
 
+var fullUpload = function() {
+	var r = request.post(url+'/full-upload', function(err, httpResponse, body) {
+		if (err) return console.error(err)
+		console.log(JSON.parse(body))
+	})
+	var form = r.form()
+	form.append('token',token)
+	form.append('filedata',fs.createReadStream(filepath))
+}
