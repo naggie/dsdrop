@@ -15,10 +15,10 @@
    limitations under the License.
 */
 
-// TODO: insertion of instance
 // TODO: garbage collection with metering
 // TODO: one-shot
 // TODO: metering for stats
+// TODO: what todo if user already uploaded file?
 
 var config = require('../lib/autoconfig')//.init(__dirname+'/../default/server.yml')
 //config.override_argv()
@@ -62,21 +62,23 @@ server.use(restify.jsonp())
 
 // file download!
 // TODO: html/text disposition inline?
-// /srv/drop/9c/462c047e22df523d20df9e8626ff009d6031d3.bin
 server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 	var token = req.params[0]
 
-	// headers (mime type, size)
-	res.header('Content-Length',1010827264)
-	res.header('Content-Type:','application/octet-stream')
-	res.header('Content-Disposition',"attachment; filename=beans.iso")
+	database.extract(token,function(err,instance) {
+		if (err) return res.send(404,err)
 
-	// stream file
-	//var stream = fs.createReadStream('/srv/drop/9c/462c047e22df523d20df9e8626ff009d6031d3.bin')
-	var stream = fs.createReadStream('/srv/drop/d4/d44272ee5f5bf887a9c85ad09ae957bc55f89d.bin')
-	// to meter: do on data, record separately, maybe
-	stream.pipe(res)
-        stream.on('end',res.end)
+		// headers (mime type, size)
+		res.header('Content-Length',instance.size)
+		res.header('Content-Type:',instance.mimetype)
+		res.header('Content-Disposition',"attachment; filename="+instance.name)
+
+		// stream file
+		var stream = fs.createReadStream(instance.binpath)
+		// to meter: do on data, record separately, maybe
+		stream.pipe(res)
+		stream.on('end',res.end)
+	})
 })
 
 // information for dashboard
@@ -98,18 +100,16 @@ server.use(function(req,res,next) {
 // Assumes server already has file. If not, this will fail with 404 and client
 // must attempt a full-upload
 server.post('/instant-upload',function(req,res,next) {
-	var instance = {
-		hash     : req.body.hash,
-		name     : req.body.name,
-		user     : req.identity.name,
-		oneshot  : !!req.body.oneshot,
-	}
-
 	// is it there?
-	hashbin.extract(instance.hash,function(err,file) {
+	hashbin.extract(req.body.hash,function(err,file) {
 		if (!err) {
-			instance.size = file.size
-			database.add(instance,function(err,token){
+			database.add({
+				hash     : req.body.hash,
+				name     : req.body.name,
+				user     : req.identity.name,
+				oneshot  : !!req.body.oneshot,
+				size     : file.size,
+			}, function(err,token){
 				if (err) return res.send(500,err)
 				res.send(200,config.url+token)
 			})
@@ -124,24 +124,23 @@ server.post('/full-upload',function(req,res,next) {
 	if (!uploaded)
 		return req.send(500,'...Upload a file next time...')
 
-	var tmp_path = req.files.filedata.path
-	var file = {
-		// hash is added later by hashbin
-		name     : req.files.filedata.name,
-		size     : req.files.filedata.size,
-		mime     : req.body.mime,
-	}
-
-	// callback(err,hash,isnew,binpath)
-	hashbin.assimilate(file.tmp_path,function(err,object){
-		file.hash = object.hash
-			console.log('Publish',file)
-		fs.unlink(tmp_path)
-
-		res.send()
-		return next()
+	hashbin.assimilate(req.files.filedata.path,function(err,file){
+		if (!err) {
+			database.add({
+				// hash is added later by hashbin
+				name     : req.files.filedata.name,
+				user     : req.identity.name,
+				oneshot  : !!req.body.oneshot,
+				new      : true,
+				size     :  file.size,
+				hash     :  file.hash,
+			},function(err,token){
+				if (err) return res.send(500,err)
+				res.send(200,config.url+token)
+			})
+		} else
+			res.send(500,err)
 	})
-
 })
 
 // web dashboard
