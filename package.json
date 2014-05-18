@@ -34,10 +34,11 @@
     "url": "https://github.com/naggie/DSPA.git"
   },
   "bin": {
-    "dsdrop-server": "./bin/server.js",
     "dsdrop": "./bin/drop.js",
-    "dsdrop-dumplogs": "./bin/dumplogs.js",
-    "dsdrop-token": "./bin/token.js"
+    "dsdrop-login": "./bin/login.js",
+    "dsdrop-server": "./bin/server.js",
+    "dsdrop-server-dumplogs": "./bin/dumplogs.js",
+    "dsdrop-server-tokens": "./bin/token.js"
   },
   "preferGlobal": true,
   "engines": {
