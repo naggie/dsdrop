@@ -34,7 +34,8 @@ if (!process.env.TOKEN) {
 	process.exit()
 }
 
-var url      = 'http://localhost:9000/'
+//var url      = 'http://localhost:9000/'
+var url      = 'http://drop.darksky.io/'
 var filepath = process.argv[2]
 var token    = process.env.TOKEN
 
