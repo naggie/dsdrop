@@ -5,7 +5,7 @@
   "keywords": [
     "sharing"
   ],
-  "version": "0.0.1",
+  "version": "2.0.0",
   "author": "Callan Bryant <callan.bryant@gmail.com> (http://callanbryant.co.uk/)",
   "scripts": {
     "start": "node app"
