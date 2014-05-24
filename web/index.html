@@ -9,7 +9,7 @@
 				src: local('Raleway ExtraLight'), local('Raleway-ExtraLight'), url(raleway.woff) format('woff');
 			}
 			body {
-				margin-top:10%;
+				margin-top:20px;
 				font-family: 'Raleway', sans-serif;
 				text-align:center;
 				font-size:22px;
@@ -20,7 +20,7 @@
 			}
 			section {
 				margin:30px;
-				padding:15px;
+				padding:20px;
 				display:inline-block;
 				max-width:800px;
 				width:100%;
@@ -30,7 +30,6 @@
 				border:1px solid #dddddd;
 			}
 			h1 {
-				margin-bottom:80px;
 			}
 			.gauge {
 				width:200px;
@@ -94,8 +93,11 @@
 		</script>
 	</head>
 	<body>
-		<i class="fa fa-download fa-5x"></i>
-		<h1>DSDROP</h1>
+		<section class="card">
+		<i id="logo" class="fa fa-download fa-5x"></i>
+			<h1>DSDROP</h1>
+			<p>Instant file sharing</p>
+		</section>
 		<section>
 			<div class="gauge" id="storage"></div>
 			<div class="gauge" id="bandwidth"></div>
