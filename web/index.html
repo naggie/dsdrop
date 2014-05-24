@@ -35,7 +35,8 @@
 				box-shadow:2px 2px 1px #efefef;
 				border:1px solid #dddddd;
 			}
-			h1 {
+			.download {
+				margin:30px;
 			}
 			.gauge {
 				width:200px;
@@ -49,8 +50,9 @@
 		<script src="justgage.1.0.1.min.js"></script>
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 		<script>
+			var gauges = {}
 			$(function() {
-				var storage = new JustGage({
+				gauges.storage = new JustGage({
 					id              : "storage",
 					value           : 344,
 					min             : 0,
@@ -65,13 +67,13 @@
 					levelColorsGradient : 0,
 				})
 
-				var bandwidth = new JustGage({
+				gauges.bandwidth = new JustGage({
 					id              : "bandwidth",
 					value           : 30,
 					min             : 0,
 					max             : 1000,
 					title           : "BANDWIDTH",
-					label           : "MBps",
+					label           : "Mbps",
 					gaugeWidthScale : 0.5,
 					valueFontColor  : "#888888",
 					gaugeColor      : "#dddddd",
@@ -80,13 +82,13 @@
 					levelColorsGradient : 0,
 				})
 
-				var downloads = new JustGage({
-					id              : "downloads",
-					value           : 3,
+				gauges.database = new JustGage({
+					id              : "database",
+					value           : 4,
 					min             : 0,
-					max             : 11,
-					title           : "DOWNLOADS",
-					label           : "in progress",
+					max             : 128,
+					title           : "DATABASE",
+					label           : "MB",
 					gaugeWidthScale : 0.5,
 					valueFontColor  : "#888888",
 					gaugeColor      : "#dddddd",
@@ -108,10 +110,15 @@
 		<section>
 			<div class="gauge" id="storage"></div>
 			<div class="gauge" id="bandwidth"></div>
-			<div class="gauge" id="downloads"></div>
+			<div class="gauge" id="database"></div>
 		</section>
 		<br />
 		<section class="card">
+			<h2>Client downloads</h2>
+			<i class="fa download fa-apple fa-3x"></i>
+			<i class="fa download fa-windows fa-3x"></i>
+			<i class="fa download fa-linux fa-3x"></i>
+			<br />
 			Information and downloads here. Drop files on this page to share etc
 		</section>
 	</body>

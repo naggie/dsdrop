@@ -15,6 +15,11 @@ tmp_dir         : /srv/drop/tmp
 port            : 9000
 listen          : 0.0.0.0
 
+# auto units later (value and units parsed to bytes later)
+storage_limit_GB : 1000
+memory_limit_MB  : 128
+max_network_Mbps : 1000
+
 
 # per upload...
 #max_filesize    : 5GB
@@ -38,4 +43,5 @@ listen          : 0.0.0.0
 #
 ## default max storage per user
 #user_quota       : 100GB
-#
+
+# auth_module : ldap/pam/none/oauth2
