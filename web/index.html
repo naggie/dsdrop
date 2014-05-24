@@ -32,12 +32,64 @@
 			h1 {
 				margin-bottom:80px;
 			}
+			.gauge {
+				width:200px;
+				height:160px;
+				display: inline-block;
+				margin:20px;
+			}
 		</style>
 		<script src="jquery-2.1.1.min.js"></script>
-		<script src="jquery.knob.js"></script>
+		<script src="raphael.2.1.0.min.js"></script>
+		<script src="justgage.1.0.1.min.js"></script>
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 		<script>
 			$(function() {
+				var storage = new JustGage({
+					id              : "storage",
+					value           : 344,
+					min             : 0,
+					max             : 600,
+					title           : "STORAGE",
+					label           : "GB",
+					gaugeWidthScale : 0.5,
+					valueFontColor  : "#888888",
+					gaugeColor      : "#dddddd",
+					showInnerShadow : 0,
+					levelColors     : ["#888888","#888888","#fa5050"],
+					levelColorsGradient : 0,
+				})
+
+				var bandwidth = new JustGage({
+					id              : "bandwidth",
+					value           : 30,
+					min             : 0,
+					max             : 1000,
+					title           : "BANDWIDTH",
+					label           : "MBps",
+					gaugeWidthScale : 0.5,
+					valueFontColor  : "#888888",
+					gaugeColor      : "#dddddd",
+					showInnerShadow : 0,
+					levelColors     : ["#888888","#888888","#fa5050"],
+					levelColorsGradient : 0,
+				})
+
+				var downloads = new JustGage({
+					id              : "downloads",
+					value           : 3,
+					min             : 0,
+					max             : 11,
+					title           : "DOWNLOADS",
+					label           : "in progress",
+					gaugeWidthScale : 0.5,
+					valueFontColor  : "#888888",
+					gaugeColor      : "#dddddd",
+					showInnerShadow : 0,
+					levelColors     : ["#888888","#888888","#fa5050"],
+					levelColorsGradient : 0,
+				})
+
 			})
 		</script>
 	</head>
@@ -45,7 +97,9 @@
 		<i class="fa fa-download fa-5x"></i>
 		<h1>DSDROP</h1>
 		<section>
-			Gauges go here
+			<div class="gauge" id="storage"></div>
+			<div class="gauge" id="bandwidth"></div>
+			<div class="gauge" id="downloads"></div>
 		</section>
 		<br />
 		<section class="card">
