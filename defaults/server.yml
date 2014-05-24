@@ -18,7 +18,7 @@ listen          : 0.0.0.0
 # auto units later (value and units parsed to bytes later)
 storage_limit_GB : 1000
 memory_limit_MB  : 128
-max_network_Mbps : 1000
+network_max_Mbps : 1000
 
 
 # per upload...

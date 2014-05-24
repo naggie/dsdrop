@@ -34,7 +34,8 @@ var tokenauth = require('../lib/tokenauth').init(rclient)
 var database  = require('../lib/database').init({
 	rclient : rclient,
     	// may as well share same token keyspace with token auth
-	keygen  : tokenauth.generate_valid_unique_key
+	keygen  : tokenauth.generate_valid_unique_key,
+    	config  : config,
 })
 
 var server = restify.createServer({
@@ -88,6 +89,10 @@ server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 
 // information for dashboard
 server.get('/stats',function(req,res,next) {
+	database.serverstats(function(err,stats) {
+		if (err) return res.send(500,err)
+		res.send(200,stats)
+	})
 })
 
 // authentication, match uploads only
