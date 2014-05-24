@@ -18,12 +18,18 @@
 			img {
 				margin-bottom:40px;
 			}
-			section {
+			section, header {
 				margin:30px;
 				padding:20px;
 				display:inline-block;
 				max-width:800px;
 				width:100%;
+			}
+			header {
+				position:relative;
+				top:-60px;
+				padding-top:50px;
+				margin-bottom:-10px;
 			}
 			.card {
 				box-shadow:2px 2px 1px #efefef;
@@ -93,11 +99,11 @@
 		</script>
 	</head>
 	<body>
-		<section class="card">
+		<header class="card">
 		<i id="logo" class="fa fa-download fa-5x"></i>
 			<h1>DSDROP</h1>
 			<p>Instant file sharing</p>
-		</section>
+		</header>
 		<section>
 			<div class="gauge" id="storage"></div>
 			<div class="gauge" id="bandwidth"></div>
