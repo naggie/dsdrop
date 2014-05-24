@@ -145,6 +145,7 @@ server.post('/full-upload',function(req,res,next) {
 				if (err) return res.send(500,err)
 				res.send(200,config.url+token)
 			})
+			fs.unlink(req.files.filedata.path)
 		} else
 			res.send(500,err)
 	})
