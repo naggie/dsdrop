@@ -82,6 +82,7 @@ server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 			var stream = fs.createReadStream(file.binpath)
 			// to meter: do on data, record separately, maybe
 			stream.pipe(res)
+			stream.on('data',function(data){ database.integrateThroughput(data.length) } )
 			stream.on('end',res.end)
 		})
 	})
