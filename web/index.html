@@ -19,29 +19,36 @@
 				margin-bottom:40px;
 			}
 			section {
-				border:1px solid #dddddd;
 				margin:30px;
 				padding:15px;
 				display:inline-block;
-				max-width:500px;
-				box-shadow:2px 2px 1px #efefef;
+				max-width:800px;
 				width:100%;
+			}
+			.card {
+				box-shadow:2px 2px 1px #efefef;
+				border:1px solid #dddddd;
 			}
 			h1 {
 				margin-bottom:80px;
 			}
 		</style>
 		<script src="jquery-2.1.1.min.js"></script>
+		<script src="jquery.knob.js"></script>
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+		<script>
+			$(function() {
+			})
+		</script>
 	</head>
 	<body>
 		<i class="fa fa-download fa-5x"></i>
 		<h1>DSDROP</h1>
 		<section>
-			Dashboard goes here
+			Gauges go here
 		</section>
 		<br />
-		<section>
+		<section class="card">
 			Information and downloads here. Drop files on this page to share etc
 		</section>
 	</body>
