@@ -46,6 +46,7 @@
 				margin:20px;
 				font-family:Arial, Sans-serif;
 				color:#888;
+				overflow:hidden;
 			}
 			.gauge text {
 				/* bad on windows */
@@ -61,12 +62,16 @@
 				margin-top:20px;
 			}
 			.gauge .label {
-				font-size:10px;
+				font-size:20px;
 			}
 		</style>
 		<script src="jquery-2.1.1.min.js"></script>
 		<script src="raphael.2.1.0.min.js"></script>
 		<script src="justgage.1.0.1.min.js"></script>
+		<!--
+		<link rel="stylesheet" href="odometer-theme-default.css">
+		<script src="odometer.min.js"></script>
+		-->
 		<script src="client.js"></script>
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	</head>
@@ -83,17 +88,17 @@
 			<div class="gauge" id="database"></div>
 			<div class="gauge" id="uploaded">
 				<div class="title">UPLOADED</div>
-				<div class="value">8</div>
+				<div class="value odometer"></div>
 				<div class="label">files</div>
 			</div>
 			<div class="gauge" id="transferred">
 				<div class="title">TRANSFERRED</div>
-				<div class="value">32</div>
+				<div class="value odometer"></div>
 				<div class="label">GB</div>
 			</div>
 			<div class="gauge" id="downloaded">
 				<div class="title">DOWNLOADED</div>
-				<div class="value">80</div>
+				<div class="value odometer"></div>
 				<div class="label">files</div>
 			</div>
 		</section>

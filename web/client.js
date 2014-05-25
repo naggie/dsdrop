@@ -13,7 +13,10 @@ $(function() {
 		})
 	},1000)
 })
-
+window.odometerOptions = {
+	amimation : 'count', // minimal
+	duration  : 1000,    // same as polling interval
+}
 var initGauges = function(stats) {
 	gauges.storage = new JustGage({
 		id              : "storage",
@@ -59,10 +62,22 @@ var initGauges = function(stats) {
 		levelColors     : ["#888888","#888888","#fa5050"],
 		levelColorsGradient : 0,
 	})
+
+	$('#uploaded .value').text(stats.upload_count)
+	$('#downloaded .value').text(stats.download_count)
+
+	$('#transferred .value').text(stats.transferred)
+	$('#transferred .label').text(stats.transferred_units)
 }
 
 var updateGauges = function(stats) {
 	gauges.storage.refresh(stats.storage_used)
 	gauges.network.refresh(stats.network_used)
 	gauges.database.refresh(stats.memory_used)
+
+	$('#uploaded .value').text(stats.upload_count)
+	$('#downloaded .value').text(stats.download_count)
+
+	$('#transferred .value').text(stats.transferred)
+	$('#transferred .label').text(stats.transferred_units)
 }
