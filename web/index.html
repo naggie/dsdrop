@@ -64,6 +64,10 @@
 			.gauge .label {
 				font-size:20px;
 			}
+			section:-webkit-full-screen{
+				zoom:2;
+				box-shadow:none;
+			}
 		</style>
 		<link rel="stylesheet" href="odometer-theme-default.css">
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -80,7 +84,7 @@
 			<p>Instant file sharing</p>
 		</header>
 		<br />
-		<section class="gauges card">
+		<section class="gauges card" id="dashboard">
 			<div class="gauge" id="storage"></div>
 			<div class="gauge" id="network"></div>
 			<div class="gauge" id="database"></div>
@@ -119,7 +123,6 @@
 				<i class="fa download fa-code fa-3x"></i>
 				<div class="title">HTML5</div>
 			</div>
-			<div class="square"></div>
 			<div class="square">
 				<i class="fa download fa-terminal fa-3x"></i>
 				<div class="title">COMMAND LINE</div>
@@ -127,6 +130,7 @@
 			<br />
 			Integrated clients are on the way. For now, please use the npm command line client.
 		</section>
+		<br />
 		<section class="card">
 			<h2>So what is dsdrop?</h2>
 			Features go here

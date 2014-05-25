@@ -12,6 +12,13 @@ $(function() {
 			success  : updateGauges,
 		})
 	},1000)
+
+	$('#dashboard').on('click',function() {
+		var e = $(this).get(0)
+		if      (e.requestFullscreen)       e.requestFullscreen()
+		else if (e.mozRequestFullScreen)    e.mozRequestFullScreen()
+		else if (e.webkitRequestFullScreen) e.webkitRequestFullScreen()
+	})
 })
 window.odometerOptions = {
 	amimation : 'count', // minimal
