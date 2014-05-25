@@ -17,7 +17,9 @@ listen          : 0.0.0.0
 
 # auto units later (value and units parsed to bytes later)
 storage_limit_GB : 1000
-memory_limit_MB  : 128
+# Redis database size limit. Either set explicitly via redis.conf, or use as a
+# rule of thumb.
+memory_limit_MB  : 30
 network_max_Mbps : 1000
 
 
