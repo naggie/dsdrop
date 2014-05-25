@@ -44,10 +44,24 @@
 				height:160px;
 				display: inline-block;
 				margin:20px;
+				font-family:Arial, Sans-serif;
+				color:#888;
 			}
 			.gauge text {
 				/* bad on windows */
 				/* font-family:Raleway !important; */
+			}
+			.gauge .title {
+				font-size:16px;
+				font-weight:bold;
+				margin:12px;
+			}
+			.gauge .value {
+				font-size:50px;
+				margin-top:20px;
+			}
+			.gauge .label {
+				font-size:10px;
 			}
 		</style>
 		<script src="jquery-2.1.1.min.js"></script>
@@ -67,6 +81,21 @@
 			<div class="gauge" id="storage"></div>
 			<div class="gauge" id="network"></div>
 			<div class="gauge" id="database"></div>
+			<div class="gauge" id="uploaded">
+				<div class="title">UPLOADED</div>
+				<div class="value">8</div>
+				<div class="label">files</div>
+			</div>
+			<div class="gauge" id="transferred">
+				<div class="title">TRANSFERRED</div>
+				<div class="value">32</div>
+				<div class="label">GB</div>
+			</div>
+			<div class="gauge" id="downloaded">
+				<div class="title">DOWNLOADED</div>
+				<div class="value">80</div>
+				<div class="label">files</div>
+			</div>
 		</section>
 		<br />
 		<section class="card">
