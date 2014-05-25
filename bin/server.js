@@ -82,7 +82,15 @@ server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 			var stream = fs.createReadStream(file.binpath)
 			// to meter: do on data, record separately, maybe
 			stream.pipe(res)
-			stream.on('data',function(data){ database.integrateThroughput(data.length) } )
+			var prevBytesWritten = 0
+			stream.on('data',function(data){
+				// HACK
+				res.socket.bytesWritten
+				// hacky way of detecting cancelled download. Otherwise, there is spike in transfer rate.
+				if (res.socket.bytesWritten == prevBytesWritten) return 0
+				database.integrateThroughput(data.length)
+				prevBytesWritten = res.socket.bytesWritten
+			})
 			stream.on('end',res.end)
 		})
 	})
