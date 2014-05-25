@@ -39,7 +39,7 @@
 			.download {
 				margin:30px;
 			}
-			.gauge {
+			.gauge, .square {
 				width:200px;
 				height:160px;
 				display: inline-block;
@@ -103,11 +103,29 @@
 		<br />
 		<section class="card">
 			<h2>Client downloads</h2>
-			<i class="fa download fa-apple fa-3x"></i>
-			<i class="fa download fa-windows fa-3x"></i>
-			<i class="fa download fa-linux fa-3x"></i>
+			<div class="square">
+				<i class="fa download fa-apple fa-3x"></i>
+				<div class="title">FINDER</div>
+			</div>
+			<div class="square">
+				<i class="fa download fa-windows fa-3x"></i>
+				<div class="title">EXPLORER</div>
+			</div>
+			<div class="square">
+				<i class="fa download fa-linux fa-3x"></i>
+				<div class="title">NAUTILUS</div>
+			</div>
+			<div class="square">
+				<i class="fa download fa-code fa-3x"></i>
+				<div class="title">HTML5</div>
+			</div>
+			<div class="square"></div>
+			<div class="square">
+				<i class="fa download fa-terminal fa-3x"></i>
+				<div class="title">COMMAND LINE</div>
+			</div>
 			<br />
-			Information and downloads here. Drop files on this page to share etc
+			Integrated clients are on the way. For now, please use the npm command line client.
 		</section>
 	</body>
 </html>
