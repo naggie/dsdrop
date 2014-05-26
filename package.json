@@ -12,16 +12,17 @@
   },
   "dependencies": {
     "colors": "^0.6.2",
-    "socket.io": "^0.9.16",
-    "restify": "^2.8.0",
-    "socket.io-client": "^0.9.16",
-    "redis": "^0.10.1",
-    "hiredis": "^0.1.16",
     "commander": "^2.2.0",
-    "printf": "^0.2.0",
-    "mkdirp": "^0.5.0",
+    "hiredis": "^0.1.16",
     "js-yaml": "^3.0.2",
-    "request": "^2.35.0"
+    "mkdirp": "^0.5.0",
+    "printf": "^0.2.0",
+    "prompt": "^0.2.13",
+    "redis": "^0.10.1",
+    "request": "^2.35.0",
+    "restify": "^2.8.0",
+    "socket.io": "^0.9.16",
+    "socket.io-client": "^0.9.16"
   },
   "devDependencies": {
     "uglify-js": "*"
