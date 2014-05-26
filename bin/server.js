@@ -76,6 +76,7 @@ server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 			// headers (mime type, size)
 			res.header('Content-Length',file.size)
 			res.header('Content-Type',instance.mimetype)
+			//res.header('Content-Disposition',"attachment; filename="+instance.name)
 			res.header('Content-Disposition',"inline; filename="+instance.name)
 
 			// stream file
