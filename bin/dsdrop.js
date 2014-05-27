@@ -51,6 +51,9 @@ hashfile(filepath,function(err,hash) {
 
 		if (httpResponse.statusCode == 404) return fullUpload()
 
+		if (httpResponse.statusCode !== 200)
+			return console.log('Error',httpResponse.statusCode,'from server:',body)
+
 		console.log(JSON.parse(body))
 	})
 	var form = r.form()
