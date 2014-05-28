@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+//TODO: consolidate into cli-client
 var prompt = require('prompt')
 
 
