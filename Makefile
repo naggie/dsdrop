@@ -1,9 +1,9 @@
-.PHONY: install local
+.PHONY: install local test
 
-local:
-	npm install
 install:
 	sudo npm install -g
+local:
+	npm install
 test:
 	echo TODO upload a file
 	echo TODO download a file

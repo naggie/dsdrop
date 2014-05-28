@@ -5,45 +5,41 @@ url             : http://drop.darksky.io/
 # Directory for hashbin (attempt to create)
 data_dir        : /srv/drop
 
-# Temporary directory to upload files to (not if I can help it)
+# Temporary directory to upload files to
 tmp_dir         : /srv/drop/tmp
-
-# Target disk usage. LRU GC will be used.
-#quota           : 300GB
 
 # ...to listen on (override with PORT/IP env var)
 port            : 9000
 listen          : 0.0.0.0
 
+# TODO: limit -> quota
 # auto units later (value and units parsed to bytes later)
 storage_limit_GB : 1000
 # Redis database size limit. Either set explicitly via redis.conf, or use as a
 # rule of thumb.
 memory_limit_MB  : 30
+# This is not capped. Set to your network connection speed.
 network_max_Mbps : 1000
 
+#
+# AUTHENTICATION AND AUTHORISATION
+#
 
-# per upload...
-#max_filesize    : 5GB
-#
-## --- not implemented below this line, not sure if needed  ---
-#default_protocol : http #s
-## HTTPS (via proxy or native)
-#key              :
-#cacrt            :
-#
-## how many credits to charge for successful uploads/downloads (per file, not per GB?)
-## set to zero to disable
-#download_static_cost    : 1
-#upload_static_cost      : 10
-## pr GB (or perhaps inverse)
-#download_dynamic_cost   : 0
-#upload_dynamic_cost     : 0
-#
-## Default amount of credits for new account
-#initial_credits : 20
-#
-## default max storage per user
-#user_quota       : 100GB
+# Auth against active directory or LDAP
+#auth_module     : ldap
+#ldap_common_dn  : ou=users,dc=darksky,dc=io
+# ldap/ldaps URL or unix socket file path
+#ldap_server_url : /var/run/slapd/ldapi
 
-# auth_module : ldap/pam/none/oauth2
+# Admin must generate every token
+auth_module : adhoc
+
+# Local account authentication using a true PAM module.
+# TODO: explain
+#auth_module : pam
+
+# Like pam, but directly parses /etc/shadow. Requires membership of 'shadow' group.
+#auth_module : shadow
+
+# Accept any user/pass combination for demo/test only
+#auth_module : dummy

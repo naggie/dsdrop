@@ -19,10 +19,7 @@
 // basic implementation
 // TODO: config system
 // TODO: oneshot flag
-
-
-
-
+// TODO: clipboard integration
 
 if (!process.argv[2]) {
 	console.log('usage:',process.argv[1],'<file to send>')
@@ -34,40 +31,15 @@ if (!process.env.TOKEN) {
 	process.exit()
 }
 
-//var url      = 'http://localhost:9000/'
-var url      = 'http://drop.darksky.io/'
 var filepath = process.argv[2]
-var token    = process.env.TOKEN
+var client = require('../lib/client')
+//client.url  = 'http://localhost:9001/'
+client.url  = 'http://drop.darksky.io/'
 
-var request  = require('request')
-var fs       = require('fs')
-var path     = require('path')
-var hashfile = require('../lib/hashbin').hashfile
 
-hashfile(filepath,function(err,hash) {
-	if (err) return console.log(err)
-	var r = request.post(url+'/instant-upload', function(err, httpResponse, body) {
-		if (err) return console.error(err)
+client.token = process.env.TOKEN
+client.publish(filepath,function(err,url) {
+	if (err) return process.stderr.write(err+"/n")
 
-		if (httpResponse.statusCode == 404) return fullUpload()
-
-		if (httpResponse.statusCode !== 200)
-			return console.log('Error',httpResponse.statusCode,'from server:',body)
-
-		console.log(JSON.parse(body))
-	})
-	var form = r.form()
-	form.append('token',token)
-	form.append('hash',hash)
-	form.append('name',path.basename(filepath))
+	console.log(url)
 })
-
-var fullUpload = function() {
-	var r = request.post(url+'/full-upload', function(err, httpResponse, body) {
-		if (err) return console.error(err)
-		console.log(JSON.parse(body))
-	})
-	var form = r.form()
-	form.append('token',token)
-	form.append('filedata',fs.createReadStream(filepath))
-}
