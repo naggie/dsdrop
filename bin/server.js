@@ -105,6 +105,26 @@ server.get('/stats',function(req,res,next) {
 	})
 })
 
+var auth = require('lib/auth/'config.auth_module).init(config)
+server.use(restify.authorizationParser())
+server.get('/login',function (req,res,next) {
+	res.header('WWW-Authenticate','Basic realm="dsdrop"')
+
+	if (!req.authorization.basic) {
+		// ask for auth, none was given so 401
+		res.send(401,auth.description)
+		return next()
+	}
+
+	auth.login(req.authorization.basic.username,req.authorization.basic.password,function(err) {
+		if (err) res.send(403,err)
+		//tokenauth.create(username,function() {
+			res.sed(200,'Some fake token')
+		//})
+		return next()
+	})
+})
+
 // authentication, match uploads only
 server.use(function(req,res,next) {
 	if (!req.url.match(/upload/)) return next()
