@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 //TODO: consolidate into cli-client
 var prompt = require('prompt')
-
+var client = require('../lib/client')
 
 prompt.start()
 
 prompt.get({
 	properties: {
-		name: {
+		username: {
 			required: true,
 		},
 		password: {
@@ -17,5 +17,7 @@ prompt.get({
 	}
 },function (err, result) {
 	if (err) return console.log('Invalid input')
-	console.log(result)
+	client.login(result.username,result.password,function(err,token) {
+
+	})
 })

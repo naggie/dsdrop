@@ -57,12 +57,7 @@ server.use(restify.bodyParser({
 }))
 server.use(restify.jsonp())
 
-
-//server.use(restify.gzipResponse()); // breaks page load
-
-
 // file download!
-// TODO: html/text disposition inline?
 server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 	var token = req.params[0]
 
@@ -105,24 +100,20 @@ server.get('/stats',function(req,res,next) {
 	})
 })
 
-var auth = require('lib/auth/'config.auth_module).init(config)
-server.use(restify.authorizationParser())
-server.get('/login',function (req,res,next) {
-	res.header('WWW-Authenticate','Basic realm="dsdrop"')
+var auth = require('../lib/auth/'+config.auth_module).init(config)
+server.get('/token',function (req,res,next) {
 
-	if (!req.authorization.basic) {
-		// ask for auth, none was given so 401
-		res.send(401,auth.description)
+	if (! req.params.username) {
+		res.send(403,auth.description)
 		return next()
 	}
-
-	auth.login(req.authorization.basic.username,req.authorization.basic.password,function(err) {
-		if (err) res.send(403,err)
+	//auth.login(req.params.username,req.params.password,function(err) {
+	//	if (err) res.send(403,err)
 		//tokenauth.create(username,function() {
-			res.sed(200,'Some fake token')
+			res.send(200,'Some foo token')
 		//})
 		return next()
-	})
+	//})
 })
 
 // authentication, match uploads only

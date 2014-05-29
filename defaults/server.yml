@@ -1,6 +1,11 @@
 # resultant URL, depending on how you have set up dsdrop.
 # it could be on a different port or protocol if it's through apache proxypass,
 # for example
+
+#
+# HOST CONFIGURATION
+#
+
 url             : http://drop.darksky.io/
 # Directory for hashbin (attempt to create)
 data_dir        : /srv/drop
@@ -12,14 +17,6 @@ tmp_dir         : /srv/drop/tmp
 port            : 9000
 listen          : 0.0.0.0
 
-# TODO: limit -> quota
-# auto units later (value and units parsed to bytes later)
-storage_limit_GB : 1000
-# Redis database size limit. Either set explicitly via redis.conf, or use as a
-# rule of thumb.
-memory_limit_MB  : 30
-# This is not capped. Set to your network connection speed.
-network_max_Mbps : 1000
 
 #
 # AUTHENTICATION AND AUTHORISATION
@@ -27,12 +24,16 @@ network_max_Mbps : 1000
 
 # Auth against active directory or LDAP
 #auth_module     : ldap
-#ldap_common_dn  : ou=users,dc=darksky,dc=io
+# will replace {username}
+#ldap_user_dn    : uid={username},ou=users,dc=darksky,dc=io
+# If not null, require group membership to this DN
+#ldap_user_dn    : uid={username},ou=users,dc=darksky,dc=io
+#ldap_group_dn   : ou=dsdrop,ou=groups,dc=darksky,dc=io
 # ldap/ldaps URL or unix socket file path
 #ldap_server_url : /var/run/slapd/ldapi
 
 # Admin must generate every token
-auth_module : adhoc
+#auth_module : adhoc
 
 # Local account authentication using a true PAM module.
 # TODO: explain
@@ -42,4 +43,20 @@ auth_module : adhoc
 #auth_module : shadow
 
 # Accept any user/pass combination for demo/test only
-#auth_module : dummy
+auth_module : dummy
+
+
+
+#
+# QUOTAS
+#
+
+# TODO: limit -> quota
+# auto units later (value and units parsed to bytes later)
+storage_limit_GB : 1000
+# Redis database size limit. Either set explicitly via redis.conf, or use as a
+# rule of thumb.
+memory_limit_MB  : 30
+# This is not capped. Set to your network connection speed.
+network_max_Mbps : 1000
+
