@@ -107,13 +107,14 @@ server.get('/token',function (req,res,next) {
 		res.send(403,auth.description)
 		return next()
 	}
-	//auth.login(req.params.username,req.params.password,function(err) {
-	//	if (err) res.send(403,err)
-		//tokenauth.create(username,function() {
-			res.send(200,'Some foo token')
-		//})
+	auth.login(req.params.username,req.params.password,function(err) {
+		if (err) return res.send(403,err)
+		tokenauth.regenerate(req.params.username,function(err,token) {
+			if (err) return res.send(403,err)
+			res.send(200,token)
+		})
 		return next()
-	//})
+	})
 })
 
 // authentication, match uploads only
