@@ -23,17 +23,17 @@ listen          : 0.0.0.0
 #
 
 # Auth against active directory or LDAP
-#auth_module     : ldap
+auth_module     : ldap
 # will replace {username}
-#ldap_user_dn    : uid={username},ou=users,dc=darksky,dc=io
+ldap_user_dn    : uid={username},ou=users,dc=darksky,dc=io
 # If not null, require group membership to this DN
 #ldap_user_dn    : uid={username},ou=users,dc=darksky,dc=io
 #ldap_group_dn   : ou=dsdrop,ou=groups,dc=darksky,dc=io
 # ldap/ldaps URL or unix socket file path
 #ldap_server_url : /var/run/slapd/ldapi
 
-# Admin must generate every token
-#auth_module : adhoc
+# Admin must generate every token (not defined, default)
+#auth_module : disabled
 
 # Local account authentication using a true PAM module.
 # TODO: explain
@@ -43,7 +43,7 @@ listen          : 0.0.0.0
 #auth_module : shadow
 
 # Accept any user/pass combination for demo/test only
-auth_module : dummy
+#auth_module : dummy
 
 
 

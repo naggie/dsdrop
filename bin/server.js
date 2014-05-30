@@ -100,7 +100,7 @@ server.get('/stats',function(req,res,next) {
 	})
 })
 
-var auth = require('../lib/auth/'+config.auth_module).init(config)
+var auth = require('../lib/auth/'+config.auth_module || '../lib/auth/').init(config)
 server.get('/token',function (req,res,next) {
 
 	if (! req.params.username) {
