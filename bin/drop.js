@@ -42,7 +42,7 @@ client.token = process.env.TOKEN
 client.publish(filepath,function(err,url) {
 	if (err) return process.stderr.write(err+"/n")
 
-	if (!process.env.TMUX && process.platform != 'darwin')
+	if (! (process.env.TMUX && process.platform == 'darwin') )
 		// TMUX messes up copy and paste in mac os x
 		clipboard.copy(url,function(err) {
 			if (!err)
@@ -50,5 +50,7 @@ client.publish(filepath,function(err,url) {
 
 			console.log(url)
 		})
+	else
+		console.log(url)
 
 })
