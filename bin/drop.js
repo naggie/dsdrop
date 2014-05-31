@@ -49,6 +49,11 @@ client.publish(filepath,function(err,url) {
 				process.stderr.write("Copied to clipboard:\n")
 
 			console.log(url)
+
+			// this is necessary, due to
+			// https://github.com/xavi-/node-copy-paste/issues/17 (Process will not exit)
+			// https://github.com/xavi-/node-copy-paste/issues/18 (error callback fired twice)
+			process.exit(0)
 		})
 	else
 		console.log(url)
