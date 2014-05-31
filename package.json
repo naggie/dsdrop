@@ -22,7 +22,8 @@
     "request": "^2.35.0",
     "restify": "^2.8.0",
     "socket.io": "^0.9.16",
-    "socket.io-client": "^0.9.16"
+    "socket.io-client": "^0.9.16",
+    "copy-paste": "~0.2.1"
   },
   "devDependencies": {
     "uglify-js": "*"

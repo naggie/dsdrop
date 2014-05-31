@@ -33,6 +33,7 @@ if (!process.env.TOKEN) {
 
 var filepath = process.argv[2]
 var client = require('../lib/client')
+var clipboard = require('copy-paste')
 //client.url  = 'http://localhost:9001/'
 client.url  = 'http://drop.darksky.io/'
 
@@ -41,12 +42,13 @@ client.token = process.env.TOKEN
 client.publish(filepath,function(err,url) {
 	if (err) return process.stderr.write(err+"/n")
 
-	//if (!process.env.TMUX && process.platform != 'darwin')
+	if (!process.env.TMUX && process.platform != 'darwin')
 		// TMUX messes up copy and paste in mac os x
-		//clipboard.copy(url,function(err) {
-		//	if (err) return
-		//	process.stderr.write("Copied to clipboard:\n")
-		//})
+		clipboard.copy(url,function(err) {
+			if (!err)
+				process.stderr.write("Copied to clipboard:\n")
 
-	console.log(url)
+			console.log(url)
+		})
+
 })
