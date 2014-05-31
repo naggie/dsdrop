@@ -21,20 +21,15 @@
     "redis": "^0.10.1",
     "request": "^2.35.0",
     "restify": "^2.8.0",
-    "socket.io": "^0.9.16",
-    "socket.io-client": "^0.9.16",
     "copy-paste": "~0.2.1"
   },
-  "devDependencies": {
-    "uglify-js": "*"
-  },
   "bugs": {
-    "url": "https://github.com/naggie/DSPA/issues"
+    "url": "https://gitlab.com/naggie/dsdrop/issues"
   },
   "license": "Apache",
   "repository": {
     "type": "git",
-    "url": "https://github.com/naggie/DSPA.git"
+    "url": "https://gitlab.com/naggie/dsdrop.git"
   },
   "bin": {
     "dsdrop": "./bin/drop.js",
