@@ -26,19 +26,9 @@ if (!process.argv[2]) {
 	process.exit()
 }
 
-if (!process.env.TOKEN) {
-	console.log('Please set token via TOKEN env var for now. Also this is hardcoded for localhost:9000 at the moment')
-	process.exit()
-}
-
 var filepath = process.argv[2]
 var client = require('../lib/client').init()
 var clipboard = require('copy-paste')
-//client.url  = 'http://localhost:9001/'
-client.url  = 'http://drop.darksky.io/'
-
-
-client.token = process.env.TOKEN
 
 client.publish(filepath,function(err,url) {
 	if (err) return process.stderr.write(err+"/n")

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //TODO: consolidate into cli-client
 var prompt = require('prompt')
-var client = require('../lib/client')
+var client = require('../lib/client').init()
 require('colors')
 
 console.log(client.url)
