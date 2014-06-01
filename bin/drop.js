@@ -32,7 +32,7 @@ if (!process.env.TOKEN) {
 }
 
 var filepath = process.argv[2]
-var client = require('../lib/client')
+var client = require('../lib/client').init()
 var clipboard = require('copy-paste')
 //client.url  = 'http://localhost:9001/'
 client.url  = 'http://drop.darksky.io/'
