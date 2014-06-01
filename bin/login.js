@@ -35,6 +35,8 @@ function login() {
 }
 
 client.describe(function(err,description) {
+	if (err) return console.log(err)
+
 	process.stderr.write("\n"+description+"\n\n")
 	login()
 })
