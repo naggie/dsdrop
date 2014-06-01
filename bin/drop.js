@@ -39,6 +39,7 @@ client.url  = 'http://drop.darksky.io/'
 
 
 client.token = process.env.TOKEN
+
 client.publish(filepath,function(err,url) {
 	if (err) return process.stderr.write(err+"/n")
 
