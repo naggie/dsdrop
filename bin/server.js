@@ -107,13 +107,15 @@ server.get('/token',function (req,res,next) {
 		res.send(403,auth.description)
 		return next()
 	}
-	auth.login(req.params.username,req.params.password,function(err) {
-		if (err) return res.send(403,err)
+	auth.login(req.params.username,req.params.password,function(err,authentic) {
+		if (err)        return res.send(500,err)
+		if (!authentic) return res.send(403,'Access denied.')
+
 		tokenauth.regenerate(req.params.username,function(err,token) {
-			if (err) return res.send(403,err)
+			if (err) return res.send(500,err)
 			res.send(200,token)
+			return next()
 		})
-		return next()
 	})
 })
 
