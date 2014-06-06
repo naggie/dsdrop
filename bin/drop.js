@@ -19,12 +19,14 @@
 // basic implementation
 // TODO: config system
 // TODO: oneshot flag
-// TODO: clipboard integration
 
 if (!process.argv[2]) {
 	console.log('usage:',process.argv[1],'<file to send>')
 	process.exit()
 }
+
+// TODO fix terrible hack to ignore Self-signed cert
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
 
 var filepath = process.argv[2]
 var client = require('../lib/client').init()
