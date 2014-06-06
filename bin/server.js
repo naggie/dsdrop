@@ -31,7 +31,7 @@ var restify   = require('restify')
 var hashbin   = require('../lib/hashbin')
 hashbin.root  = config.data_dir
 var tokenauth = require('../lib/tokenauth').init(rclient)
-var log       = require('../lib/logger').init(rclient).log
+var log       = require('../lib/objectlog').init(rclient).log
 var database  = require('../lib/database').init({
 	rclient : rclient,
     	// may as well share same token keyspace with token auth
