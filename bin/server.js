@@ -31,6 +31,7 @@ var restify   = require('restify')
 var hashbin   = require('../lib/hashbin')
 hashbin.root  = config.data_dir
 var tokenauth = require('../lib/tokenauth').init(rclient)
+var log       = require('../lib/logger').init(rclient).log
 var database  = require('../lib/database').init({
 	rclient : rclient,
     	// may as well share same token keyspace with token auth
@@ -67,6 +68,14 @@ server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 
 		hashbin.extract(instance.hash,function(err,file) {
 			if (err) return res.send(404,err)
+
+			log({
+				token:token,
+				req:req,
+				publisher:instance.user,
+				filename:instance.name,
+				action:'DOWNLOAD_START',
+			})
 
 			// headers (mime type, size)
 			res.header('Content-Length',file.size)
