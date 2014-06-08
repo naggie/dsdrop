@@ -35,7 +35,7 @@ var log       = require('../lib/objectlog').init(rclient).log
 var database  = require('../lib/database').init({
 	rclient : rclient,
     	// may as well share same token keyspace with token auth
-	keygen  : tokenauth.generate_valid_unique_key,
+	keygen  : tokenauth.generate_valid_unique_token,
     	config  : config,
 })
 
