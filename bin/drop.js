@@ -28,24 +28,80 @@ if (!process.argv[2]) {
 var filepath = process.argv[2]
 var client = require('../lib/client').init()
 var clipboard = require('copy-paste')
+var prompt = require('prompt')
+require('colors')
 
-client.publish(filepath,function(err,url) {
-	if (err) return process.stderr.write(err+"/n")
+// just for error codes
+var tokenauth =  require('../lib/tokenauth')
+ 
+if (!client.token)
+	login(publish)
+else
+	publish()
 
-	if (! (process.env.TMUX && process.platform == 'darwin') )
-		// TMUX messes up copy and paste in mac os x
-		clipboard.copy(url,function(err) {
-			if (!err)
-				process.stderr.write("Copied to clipboard:\n")
+function publish () {
+	client.publish(filepath,function(err,url) {
+		// new session token, pls
+		if (
+			err == tokenauth.TOKEN_EXPIRED ||
+			err == tokenauth.TOKEN_COMPROMISED
+		) login(publish)
 
+		if (err) return process.stderr.write(err+"/n")
+
+		if (! (process.env.TMUX && process.platform == 'darwin') )
+			// TMUX messes up copy and paste in mac os x
+			clipboard.copy(url,function(err) {
+				if (!err)
+					process.stderr.write("Copied to clipboard:\n")
+
+				console.log(url)
+
+				// this is necessary, due to
+				// https://github.com/xavi-/node-copy-paste/issues/17 (Process will not exit)
+				// https://github.com/xavi-/node-copy-paste/issues/18 (error callback fired twice)
+				process.exit(0)
+			})
+		else
 			console.log(url)
 
-			// this is necessary, due to
-			// https://github.com/xavi-/node-copy-paste/issues/17 (Process will not exit)
-			// https://github.com/xavi-/node-copy-paste/issues/18 (error callback fired twice)
-			process.exit(0)
-		})
-	else
-		console.log(url)
+	})
+}
 
-})
+function login(success) {
+	console.log(client.url)
+
+	client.describe(function(err,description) {
+		if (err) return console.log(err)
+
+		process.stderr.write("\n"+description+"\n\n")
+
+		prompt.start()
+
+		prompt.get({
+			properties: {
+				username: {
+					required: true,
+					default: process.env.USER
+				},
+				password: {
+					hidden: true,
+					required: true,
+				}
+			}
+		},function (err, result) {
+			if (err) return console.log('Invalid input')
+
+			client.login(result.username,result.password,function(err) {
+				process.stderr.write("\n")
+
+				if (err)
+					process.stderr.write(err.red+"\n")
+				else {
+					process.stderr.write("Login Successful!\n\n".green)
+					success()
+				}
+			})
+		})
+	})
+}
