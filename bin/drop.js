@@ -25,9 +25,6 @@ if (!process.argv[2]) {
 	process.exit()
 }
 
-// TODO fix terrible hack to ignore Self-signed cert
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
-
 var filepath = process.argv[2]
 var client = require('../lib/client').init()
 var clipboard = require('copy-paste')
