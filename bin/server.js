@@ -111,7 +111,9 @@ server.get('/stats',function(req,res,next) {
 
 var auth = require('../lib/auth/'+config.auth_module || '../lib/auth/').init(config)
 server.get('/token',function (req,res,next) {
-
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+	// won't be used, could still be valid. Plug the hole.
+	tokenauth.invalidateToken(req.params.old)
 	if (! req.params.username) {
 		res.send(403,auth.description)
 		return next()
@@ -120,7 +122,7 @@ server.get('/token',function (req,res,next) {
 		if (err)        return res.send(500,err)
 		if (!authentic) return res.send(403,'Access denied.')
 
-		tokenauth.regenerate(req.params.username,function(err,token) {
+		tokenauth.create(req.params.username,ip,function(err,token) {
 			if (err) return res.send(500,err)
 			res.send(200,token)
 			return next()
@@ -131,8 +133,9 @@ server.get('/token',function (req,res,next) {
 // authentication, match uploads only
 server.use(function(req,res,next) {
 	if (!req.url.match(/upload/)) return next()
+	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 
-	tokenauth.authenticate(req.body.token,function(err,identity) {
+	tokenauth.authenticate(req.body.token,ip,function(err,identity) {
 		if (err) return res.send(403,err)
 		req.identity = identity
 		return next()
