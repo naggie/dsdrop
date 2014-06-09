@@ -135,9 +135,9 @@ server.use(function(req,res,next) {
 	if (!req.url.match(/upload/)) return next()
 	var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 
-	tokenauth.authenticate(req.body.token,ip,function(err,identity) {
+	tokenauth.authenticate(req.body.token,ip,function(err,username) {
 		if (err) return res.send(403,err)
-		req.identity = identity
+		req.username = username
 		return next()
 	})
 })
@@ -152,7 +152,7 @@ server.post('/instant-upload',function(req,res,next) {
 			database.add({
 				hash     : req.body.hash,
 				name     : req.body.name,
-				user     : req.identity.name,
+				user     : req.username,
 				oneshot  : !!req.body.oneshot,
 				size     : file.size,
 				new      : false,
@@ -177,7 +177,7 @@ server.post('/full-upload',function(req,res,next) {
 			database.add({
 				// hash is added later by hashbin
 				name     : req.files.filedata.name,
-				user     : req.identity.name,
+				user     : req.username,
 				oneshot  : !!req.body.oneshot,
 				new      : file.new,
 				size     : file.size,
