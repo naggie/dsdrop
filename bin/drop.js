@@ -31,7 +31,9 @@ var clipboard = require('copy-paste')
 var prompt = require('prompt')
 require('colors')
 
-var client = new Client()
+var client = new Client({
+	filepath:filepath,
+})
 
 if (!client.token)
 	login(publish)
@@ -39,7 +41,7 @@ else
 	publish()
 
 function publish () {
-	client.publish(filepath,function(err,url) {
+	client.publish(function(err,url) {
 		// new session token, pls
 		if ( err == client.TOKEN_INVALID) login(publish)
 		if (err) return process.stderr.write(err.yellow+"\n")
