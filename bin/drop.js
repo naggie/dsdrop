@@ -31,9 +31,6 @@ var clipboard = require('copy-paste')
 var prompt = require('prompt')
 require('colors')
 
-// just for error codes
-var tokenauth =  require('../lib/tokenauth')
- 
 if (!client.token)
 	login(publish)
 else
@@ -42,12 +39,8 @@ else
 function publish () {
 	client.publish(filepath,function(err,url) {
 		// new session token, pls
-		if (
-			err == tokenauth.TOKEN_EXPIRED ||
-			err == tokenauth.TOKEN_COMPROMISED
-		) login(publish)
-
-		if (err) return process.stderr.write(err+"/n")
+		if ( err == client.TOKEN_INVALID) login(publish)
+		else if (err) return process.stderr.write(err.yellow+"\n")
 
 		if (! (process.env.TMUX && process.platform == 'darwin') )
 			// TMUX messes up copy and paste in mac os x
