@@ -62,7 +62,7 @@ function publish () {
 }
 
 function login(success) {
-	console.log(client.url)
+	console.log('Connecting to '+client.url)
 
 	client.describe(function(err,description) {
 		if (err) return console.log(err)
