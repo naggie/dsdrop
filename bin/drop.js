@@ -40,7 +40,7 @@ function publish () {
 	client.publish(filepath,function(err,url) {
 		// new session token, pls
 		if ( err == client.TOKEN_INVALID) login(publish)
-		else if (err) return process.stderr.write(err.yellow+"\n")
+		if (err) return process.stderr.write(err.yellow+"\n")
 
 		if (! (process.env.TMUX && process.platform == 'darwin') )
 			// TMUX messes up copy and paste in mac os x
