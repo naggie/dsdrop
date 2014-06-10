@@ -26,10 +26,12 @@ if (!process.argv[2]) {
 }
 
 var filepath = process.argv[2]
-var client = require('../lib/client').init()
+var Client = require('../lib/client')
 var clipboard = require('copy-paste')
 var prompt = require('prompt')
 require('colors')
+
+var client = new Client()
 
 if (!client.token)
 	login(publish)
