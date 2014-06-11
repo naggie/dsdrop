@@ -73,21 +73,21 @@ function publish () {
 		if (err == uploader.TOKEN_INVALID) login(publish)
 		if (err) return process.stderr.write(err.yellow+"\n")
 
-		if (! (process.env.TMUX && process.platform == 'darwin') )
-			// TMUX messes up copy and paste in mac os x
-			clipboard.copy(url,function(err) {
-				if (!err)
-					process.stderr.write("Copied to clipboard:\n")
 
-				console.log(url)
+		// TMUX messes up copy and paste in mac os x
+		clipboard.copy(url,function(err) {
+			if (!err && ! (process.env.TMUX && process.platform == 'darwin') )
+				process.stderr.write("\nURL in clipboard: ".green)
+			else
+				process.stderr.write("\nURL: ".green)
 
-				// this is necessary, due to
-				// https://github.com/xavi-/node-copy-paste/issues/17 (Process will not exit)
-				// https://github.com/xavi-/node-copy-paste/issues/18 (error callback fired twice)
-				process.exit(0)
-			})
-		else
 			console.log(url)
+
+			// this is necessary, due to
+			// https://github.com/xavi-/node-copy-paste/issues/17 (Process will not exit)
+			// https://github.com/xavi-/node-copy-paste/issues/18 (error callback fired twice)
+			process.exit(0)
+		})
 
 	})
 }
