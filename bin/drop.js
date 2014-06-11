@@ -106,15 +106,28 @@ function login(success) {
 
 
 
-uploader.on('fullUpload',function() {
-	var bar = new ProgressBar('  Uploading [:bar] :percent :etas', {
+uploader.on('uploadStart',function() {
+	var bar = new ProgressBar(' Uploading [:bar] :percent :etas', {
 		complete: '=',
 		incomplete: ' ',
 		width: 30,
 		total: uploader.filesize,
 	})
 
-	uploader.on('progress',function(val) {
+	uploader.on('uploadProgress',function(val) {
+		bar.update(val/uploader.filesize)
+	})
+})
+
+uploader.on('hashStart',function() {
+	var bar = new ProgressBar(' Hashing    [:bar] :percent :etas', {
+		complete: '=',
+		incomplete: ' ',
+		width: 30,
+		total: uploader.filesize,
+	})
+
+	uploader.on('hashProgress',function(val) {
 		bar.update(val/uploader.filesize)
 	})
 })
