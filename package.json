@@ -22,7 +22,8 @@
     "prompt": "^0.2.13",
     "redis": "^0.10.1",
     "request": "^2.35.0",
-    "restify": "^2.8.0"
+    "restify": "^2.8.0",
+    "progress": "~1.1.5"
   },
   "bugs": {
     "url": "https://gitlab.com/naggie/dsdrop/issues"

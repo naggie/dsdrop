@@ -26,24 +26,25 @@ if (!process.argv[2]) {
 }
 
 var filepath = process.argv[2]
-var Client = require('../lib/client')
+var Uploader = require('../lib/Uploader')
 var clipboard = require('copy-paste')
 var prompt = require('prompt')
+var ProgressBar = require('progress')
 require('colors')
 
-var client = new Client({
+var uploader = new Uploader({
 	filepath:filepath,
 })
 
-if (!client.token)
+if (!uploader.token)
 	login(publish)
 else
 	publish()
 
 function publish () {
-	client.publish(function(err,url) {
+	uploader.publish(function(err,url) {
 		// new session token, pls
-		if ( err == client.TOKEN_INVALID) login(publish)
+		if (err == uploader.TOKEN_INVALID) login(publish)
 		if (err) return process.stderr.write(err.yellow+"\n")
 
 		if (! (process.env.TMUX && process.platform == 'darwin') )
@@ -66,9 +67,9 @@ function publish () {
 }
 
 function login(success) {
-	console.log('Connecting to '+client.url)
+	console.log('Connecting to '+uploader.url)
 
-	client.describe(function(err,description) {
+	uploader.describe(function(err,description) {
 		if (err) return console.log(err)
 
 		process.stderr.write("\n"+description+"\n\n")
@@ -89,7 +90,7 @@ function login(success) {
 		},function (err, result) {
 			if (err) return console.log('Invalid input')
 
-			client.login(result.username,result.password,function(err) {
+			uploader.login(result.username,result.password,function(err) {
 				process.stderr.write("\n")
 
 				if (err)
@@ -102,3 +103,18 @@ function login(success) {
 		})
 	})
 }
+
+
+
+uploader.on('fullUpload',function() {
+	var bar = new ProgressBar('  Uploading [:bar] :percent :etas', {
+		complete: '=',
+		incomplete: ' ',
+		width: 30,
+		total: uploader.filesize,
+	})
+
+	uploader.on('progress',function(val) {
+		bar.update(val/uploader.filesize)
+	})
+})
