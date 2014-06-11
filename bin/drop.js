@@ -36,6 +36,32 @@ var uploader = new Uploader({
 	filepath:filepath,
 })
 
+uploader.on('uploadStart',function() {
+	var bar = new ProgressBar(' Uploading [:bar] :percent :etas', {
+		complete: '=',
+		incomplete: ' ',
+		width: 30,
+		total: uploader.filesize,
+	})
+
+	uploader.on('uploadProgress',function(val) {
+		bar.update(val/uploader.filesize)
+	})
+})
+
+uploader.on('hashStart',function() {
+	var bar = new ProgressBar(' Hashing   [:bar] :percent :etas', {
+		complete: '=',
+		incomplete: ' ',
+		width: 30,
+		total: uploader.filesize,
+	})
+
+	uploader.on('hashProgress',function(val) {
+		bar.update(val/uploader.filesize)
+	})
+})
+
 if (!uploader.token)
 	login(publish)
 else
@@ -106,28 +132,3 @@ function login(success) {
 
 
 
-uploader.on('uploadStart',function() {
-	var bar = new ProgressBar(' Uploading [:bar] :percent :etas', {
-		complete: '=',
-		incomplete: ' ',
-		width: 30,
-		total: uploader.filesize,
-	})
-
-	uploader.on('uploadProgress',function(val) {
-		bar.update(val/uploader.filesize)
-	})
-})
-
-uploader.on('hashStart',function() {
-	var bar = new ProgressBar(' Hashing    [:bar] :percent :etas', {
-		complete: '=',
-		incomplete: ' ',
-		width: 30,
-		total: uploader.filesize,
-	})
-
-	uploader.on('hashProgress',function(val) {
-		bar.update(val/uploader.filesize)
-	})
-})
