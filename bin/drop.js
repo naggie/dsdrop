@@ -37,7 +37,7 @@ var uploader = new Uploader({
 })
 
 uploader.on('uploadStart',function() {
-	var bar = new ProgressBar(' Uploading [:bar] :percent :etas', {
+	var bar = new ProgressBar('Uploading [:bar] :percent :etas', {
 		complete: '=',
 		incomplete: ' ',
 		width: 30,
@@ -50,7 +50,7 @@ uploader.on('uploadStart',function() {
 })
 
 uploader.on('hashStart',function() {
-	var bar = new ProgressBar(' Hashing   [:bar] :percent :etas', {
+	var bar = new ProgressBar('Analysing [:bar] :percent :etas', {
 		complete: '=',
 		incomplete: ' ',
 		width: 30,
