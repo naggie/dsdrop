@@ -62,6 +62,11 @@ uploader.on('hashStart',function() {
 	})
 })
 
+uploader.on('error',function(err) {
+	console.error(err.red)
+	process.exit(23)
+})
+
 if (!uploader.token)
 	login(publish)
 else
