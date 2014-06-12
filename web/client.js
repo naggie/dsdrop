@@ -73,8 +73,7 @@ var initGauges = function(stats) {
 	$('#uploaded .value').text(stats.upload_count)
 	$('#downloaded .value').text(stats.download_count)
 
-	$('#transferred .value').text(stats.transferred)
-	$('#transferred .label').text(stats.transferred_units)
+	$('#retention .value').text(stats.retention_days)
 }
 
 var updateGauges = function(stats) {
@@ -84,7 +83,5 @@ var updateGauges = function(stats) {
 
 	$('#uploaded .value').text(stats.upload_count)
 	$('#downloaded .value').text(stats.download_count)
-
-	$('#transferred .value').text(stats.transferred)
-	$('#transferred .label').text(stats.transferred_units)
+	$('#retention .value').text(stats.retention_days)
 }
