@@ -32,9 +32,7 @@ var prompt = require('prompt')
 var ProgressBar = require('progress')
 require('colors')
 
-var uploader = new Uploader({
-	filepath:filepath,
-})
+var uploader = new Uploader()
 
 uploader.on('uploadStart',function() {
 	var bar = new ProgressBar('Uploading [:bar] :percent :etas', {
@@ -73,7 +71,7 @@ else
 	publish()
 
 function publish () {
-	uploader.publish(function(err,url) {
+	uploader.publish(filepath,function(err,url) {
 		// new session token, pls
 		if (err == uploader.TOKEN_INVALID) login(publish)
 		if (err) return process.stderr.write(err.yellow+"\n")
