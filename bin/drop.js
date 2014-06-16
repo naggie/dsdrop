@@ -61,16 +61,12 @@ uploader.on('hashStart',function() {
 })
 
 uploader.on('error',function(err) {
-	console.error(err.red)
+	console.error(err.message.red)
 	process.exit(23)
 })
 
-uploader.setFilepath(filepath)
+uploader.uploadFile(filepath)
 
-if (!uploader.token)
-	login(publish)
-else
-	publish()
 
 function publish () {
 	uploader.publish(function(err,url) {
