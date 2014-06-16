@@ -65,13 +65,15 @@ uploader.on('error',function(err) {
 	process.exit(23)
 })
 
+uploader.setFilepath(filepath)
+
 if (!uploader.token)
 	login(publish)
 else
 	publish()
 
 function publish () {
-	uploader.publish(filepath,function(err,url) {
+	uploader.publish(function(err,url) {
 		// new session token, pls
 		if (err == uploader.TOKEN_INVALID) login(publish)
 		if (err) return process.stderr.write(err.yellow+"\n")
