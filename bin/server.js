@@ -105,6 +105,7 @@ server.get(/([A-Za-z0-9]{8})$/,function(req,res,next) {
 
 // information for dashboard
 server.get('/stats',function(req,res,next) {
+	res.header('Cache-Control','no-cache')
 	database.serverstats(function(err,stats) {
 		if (err) return res.send(500,err)
 		res.send(200,stats)
