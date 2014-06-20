@@ -26,110 +26,96 @@ if (!process.argv[2]) {
 }
 
 var filepath = process.argv[2]
-var Uploader = require('../lib/Uploader')
+var Upload = require('../lib/Upload')
 var clipboard = require('copy-paste')
 var prompt = require('prompt')
 var ProgressBar = require('progress')
 require('colors')
 
-var uploader = new Uploader()
+var upload = new Upload()
 
-uploader.on('uploadStart',function() {
+upload.on('uploadStart',function() {
 	var bar = new ProgressBar('Uploading [:bar] :percent :etas', {
 		complete: '=',
 		incomplete: ' ',
 		width: 30,
-		total: uploader.filesize,
+		total: upload.filesize,
 	})
 
-	uploader.on('uploadProgress',function(val) {
-		bar.update(val/uploader.filesize)
+	upload.on('uploadProgress',function(val) {
+		bar.update(val/upload.filesize)
 	})
 })
 
-uploader.on('hashStart',function() {
+upload.on('hashStart',function() {
 	var bar = new ProgressBar('Analysing [:bar] :percent :etas', {
 		complete: '=',
 		incomplete: ' ',
 		width: 30,
-		total: uploader.filesize,
+		total: upload.filesize,
 	})
 
-	uploader.on('hashProgress',function(val) {
-		bar.update(val/uploader.filesize)
+	upload.on('hashProgress',function(val) {
+		bar.update(val/upload.filesize)
 	})
 })
 
-uploader.on('error',function(err) {
+// programatic error
+upload.on('error',function(err) {
 	console.error(err.message.red)
 	process.exit(23)
 })
 
-uploader.uploadFile(filepath)
 
+upload.on('authenticationFailure',function(msg) {
+	process.stderr.write(err.red+"\n")
+	proces.exit()
+})
 
-function publish () {
-	uploader.publish(function(err,url) {
-		// new session token, pls
-		if (err == uploader.TOKEN_INVALID) login(publish)
-		if (err) return process.stderr.write(err.yellow+"\n")
+upload.on('done',function(url) {
+	// TMUX messes up copy and paste in mac os x
+	clipboard.copy(url,function(err) {
+		if (!err && ! (process.env.TMUX && process.platform == 'darwin') )
+			process.stderr.write("\nURL in clipboard: ".green)
+		else
+			process.stderr.write("\nURL: ".green)
 
+		console.log(url)
 
-		// TMUX messes up copy and paste in mac os x
-		clipboard.copy(url,function(err) {
-			if (!err && ! (process.env.TMUX && process.platform == 'darwin') )
-				process.stderr.write("\nURL in clipboard: ".green)
-			else
-				process.stderr.write("\nURL: ".green)
-
-			console.log(url)
-
-			// this is necessary, due to
-			// https://github.com/xavi-/node-copy-paste/issues/17 (Process will not exit)
-			// https://github.com/xavi-/node-copy-paste/issues/18 (error callback fired twice)
-			process.exit(0)
-		})
-
+		// this is necessary, due to
+		// https://github.com/xavi-/node-copy-paste/issues/17 (Process will not exit)
+		// https://github.com/xavi-/node-copy-paste/issues/18 (error callback fired twice)
+		process.exit(0)
 	})
-}
+})
 
-function login(success) {
-	console.log('Connecting to '+uploader.url)
+upload.on('plsLogin',function(){
+	console.log('Connecting to '+upload.url)
 
-	uploader.describe(function(err,description) {
-		if (err) return console.log(err)
+	process.stderr.write("\n"+upload.description+"\n\n")
 
-		process.stderr.write("\n"+description+"\n\n")
+	prompt.start()
 
-		prompt.start()
-
-		prompt.get({
-			properties: {
-				username: {
-					required: true,
-					default: process.env.USER
-				},
-				password: {
-					hidden: true,
-					required: true,
-				}
+	prompt.get({
+		properties: {
+			username: {
+				required: true,
+				default: process.env.USER
+			},
+			password: {
+				hidden: true,
+				required: true,
 			}
-		},function (err, result) {
-			if (err) return console.log('Invalid input')
-
-			uploader.login(result.username,result.password,function(err) {
-				process.stderr.write("\n")
-
-				if (err)
-					process.stderr.write(err.red+"\n")
-				else {
-					process.stderr.write("Login Successful!\n\n".green)
-					success()
-				}
-			})
-		})
+		}
+	},function (err, result) {
+		if (err) return console.log('Invalid input'.yellow)
+		upload.login(result.username,result.password)
 	})
-}
+})
+
+upload.on('authenticated',function() {
+	console.log("\nAuthentication and authorisation successful".green)
+})
 
 
-
+upload.uploadFile(filepath)
