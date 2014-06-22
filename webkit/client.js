@@ -20,51 +20,40 @@ var upload = new Upload()
 var clipboard = gui.Clipboard.get()
 gui.Window.get().showDevTools()
 	//alert($)
-/*
-if (!process.argv[2]) {
-	console.log('usage:',process.argv[1],'<file to send>')
-	process.exit()
-}
 
-var filepath = process.argv[2]
-var Upload = require('../lib/Upload')
-var clipboard = require('copy-paste')
-var prompt = require('prompt')
-var ProgressBar = require('progress')
-require('colors')
 
-var upload = new Upload()
+var filepath = gui.App.argv[0]
+var filepath = '/tmp/Upload.js'
+
+$(function() {
+	choosePage('about')
+
+	if (filepath)
+		upload.uploadFile(filepath)
+})
 
 upload.on('uploadStart',function() {
-	var bar = new ProgressBar('Uploading [:bar] :percent :etas', {
-		complete: '=',
-		incomplete: ' ',
-		width: 30,
-		total: upload.filesize,
-	})
+	choosePage('process')
+		//total: upload.filesize,
 
 	upload.on('uploadProgress',function(val) {
-		bar.update(val/upload.filesize)
+		console.log(val/upload.filesize)
 	})
 })
 
 upload.on('hashStart',function() {
-	var bar = new ProgressBar('Analysing [:bar] :percent :etas', {
-		complete: '=',
-		incomplete: ' ',
-		width: 30,
-		total: upload.filesize,
-	})
+	choosePage('process')
+//		total: upload.filesize,
 
 	upload.on('hashProgress',function(val) {
-		bar.update(val/upload.filesize)
+		console.log(val/upload.filesize)
 	})
 })
 
 // programatic error
 upload.on('error',function(err) {
-	console.error(err.message.red)
-	process.exit(23)
+	choosePage('error')
+	$('#error').text(err.message)
 })
 
 
@@ -74,50 +63,23 @@ upload.on('authenticationFailure',function(msg) {
 })
 
 upload.on('done',function(url) {
-	// TMUX messes up copy and paste in mac os x
-	clipboard.copy(url,function(err) {
-		if (!err && ! (process.env.TMUX && process.platform == 'darwin') )
-			process.stderr.write("\nURL in clipboard: ".green)
-		else
-			process.stderr.write("\nURL: ".green)
-
-		console.log(url)
-
-		// this is necessary, due to
-		// https://github.com/xavi-/node-copy-paste/issues/17 (Process will not exit)
-		// https://github.com/xavi-/node-copy-paste/issues/18 (error callback fired twice)
-		process.exit(0)
-	})
+	clipboard.set(url,'text')
 })
 
 upload.on('plsLogin',function(){
+	choosePage('login')
 	console.log('Connecting to '+upload.url)
 
-	process.stderr.write("\n"+upload.description+"\n\n")
+	console.log("\n"+upload.description+"\n\n")
 
-	prompt.start()
-
-	prompt.get({
-		properties: {
-			username: {
-				required: true,
-				default: process.env.USER
-			},
-			password: {
-				hidden: true,
-				required: true,
-			}
-		}
-	},function (err, result) {
-		if (err) return console.log('Invalid input'.yellow)
-		upload.login(result.username,result.password)
-	})
 })
 
 upload.on('authenticated',function() {
+	choosePage('process')
 	console.log("\nAuthentication and authorisation successful".green)
 })
 
-
-upload.uploadFile(filepath)
-*/
+var choosePage = function(page) {
+	$('.page').hide()
+	$('#'+page).show()
+}
