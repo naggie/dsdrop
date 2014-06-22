@@ -1,0 +1,10 @@
+{
+  "name": "dsdrop",
+  "main": "index.html",
+  "window": {
+    "toolbar": true,
+    "resizable": false,
+    "width": 500,
+    "height": 280
+  }
+}
