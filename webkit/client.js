@@ -39,13 +39,14 @@ upload.on('hashStart',function() {
 	choosePage('process')
 	var bar = new ProgBar('#hashbar')
 	bar.max = upload.filesize
-
-	upload.on('hashProgress',function(val) {
-		bar.set(val)
-	})
+	upload.on('hashProgress',bar.set)
 })
 
 upload.on('uploadStart',function() {
+	choosePage('process')
+	var bar = new ProgBar('#uploadbar')
+	bar.max = upload.filesize
+	upload.on('uploadProgress',bar.set)
 })
 
 // programatic error
@@ -91,8 +92,9 @@ var ProgBar = function(selector) {
 	this.set = function(val) {
 		var percent = val*100/self.max
 
-		filler.stop(1).animate({
-			width : percent+'%',
-		})
+		//filler.stop(1).animate({
+		//	width : percent+'%',
+		//})
+		filler.css('width',percent+'%')
 	}
 }
