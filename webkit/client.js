@@ -28,12 +28,12 @@ var clipboard = gui.Clipboard.get()
 var filepath = gui.App.argv[0]
 var filepath = '/tmp/Upload.js'
 
-$(function() {
+window.onload = function() {
 	choosePage('about')
 
-	if (filepath)
-		upload.uploadFile(filepath)
-})
+	//if (filepath)
+	//	upload.uploadFile(filepath)
+}
 
 upload.on('uploadStart',function() {
 	choosePage('process')
