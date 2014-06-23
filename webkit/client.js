@@ -26,31 +26,26 @@ var clipboard = gui.Clipboard.get()
 
 
 var filepath = gui.App.argv[0]
-var filepath = '/tmp/Upload.js'
+var filepath = '/Users/naggie/Downloads/darkbuntu-1031-master.iso'
 
 window.onload = function() {
 	choosePage('about')
 
-	//if (filepath)
-	//	upload.uploadFile(filepath)
+	if (filepath)
+		upload.uploadFile(filepath)
 }
-
-upload.on('uploadStart',function() {
-	choosePage('process')
-		//total: upload.filesize,
-
-	upload.on('uploadProgress',function(val) {
-		console.log(val/upload.filesize)
-	})
-})
 
 upload.on('hashStart',function() {
 	choosePage('process')
-//		total: upload.filesize,
+	var bar = new ProgBar('#hashbar')
+	bar.max = upload.filesize
 
 	upload.on('hashProgress',function(val) {
-		console.log(val/upload.filesize)
+		bar.set(val)
 	})
+})
+
+upload.on('uploadStart',function() {
 })
 
 // programatic error
@@ -83,4 +78,21 @@ upload.on('authenticated',function() {
 var choosePage = function(id) {
 	$('.page').css('display','none')
 	$('#'+id) .css('display','block')
+}
+
+var ProgBar = function(selector) {
+	var self = this
+
+	var handle = $(selector)
+	var filler = $('<div class="filler"></div>')
+	handle.addClass('bar').empty().append(filler)
+
+	this.max = 100
+	this.set = function(val) {
+		var percent = val*100/self.max
+
+		filler.stop(1).animate({
+			width : percent+'%',
+		})
+	}
 }

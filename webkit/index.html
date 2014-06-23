@@ -3,23 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>dsdrop</title>
-		<style>
-			@font-face {
-				font-family: 'Raleway';
-				font-style: normal;
-				src: local('Raleway ExtraLight'), local('Raleway-ExtraLight'), url(raleway.woff) format('woff');
-			}
-			body {
-				margin-top:20px;
-				font-family: 'Raleway', sans-serif;
-				text-align:center;
-				font-size:22px;
-				color:#888888;
-			}
-			.disabled{
-				opacity:0.25;
-			}
-		</style>
+		<link href="style.css" rel="stylesheet">
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 		<!-- For node-only context, use node-main in package.json -->
 		<!-- Mixed context -->
@@ -31,8 +15,13 @@
 	</head>
 	<body>
 		<div id="about" class="page">
+			<p>Enterprise-ready instant file sharing</p>
+			<p>Instructions, buttons...</p>
+			<div class="bar"><div class="filler"></div></div>
 		</div>
-		<div id="processing" class="page">
+		<div id="process" class="page">
+			<div id="hashbar"></div>
+			<div id="downloadbar"></div>
 		</div>
 		<div id="login" class="page">
 			<div id="loginmsg">Please login</div>
