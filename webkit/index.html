@@ -35,8 +35,15 @@
 		<div id="processing" class="page">
 		</div>
 		<div id="login" class="page">
+			<div id="loginmsg">Please login</div>
+			<form>
+				<input type="text"     name="username" id="username" />
+				<input type="password" name="password" id="password" />
+				<input type="submit"   value="Login">
+			</form>
 		</div>
 		<div id="error" class="page">
+			<i class="fa fa-warning fa-5x"></i><span id="errormsg"></span>
 		</div>
 		<div id="success" class="page">
 			<input id="url"></input>

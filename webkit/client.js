@@ -16,9 +16,12 @@
    limitations under the License.
 */
 
+// Note, this gui is targeted at non-technical users. The command-line client
+// is for technical users.
+
 var upload = new Upload()
 var clipboard = gui.Clipboard.get()
-gui.Window.get().showDevTools()
+//gui.Window.get().showDevTools()
 	//alert($)
 
 
@@ -58,8 +61,8 @@ upload.on('error',function(err) {
 
 
 upload.on('authenticationFailure',function(msg) {
-	process.stderr.write(err.red+"\n")
-	proces.exit()
+	choosePage('login')
+	$('#loginmsg').text(msg).css('color','red')
 })
 
 upload.on('done',function(url) {
@@ -68,9 +71,7 @@ upload.on('done',function(url) {
 
 upload.on('plsLogin',function(){
 	choosePage('login')
-	console.log('Connecting to '+upload.url)
-
-	console.log("\n"+upload.description+"\n\n")
+	$('#loginmsg').text(upload.description)
 
 })
 
@@ -79,7 +80,7 @@ upload.on('authenticated',function() {
 	console.log("\nAuthentication and authorisation successful".green)
 })
 
-var choosePage = function(page) {
-	$('.page').hide()
-	$('#'+page).show()
+var choosePage = function(id) {
+	$('.page').css('display','none')
+	$('#'+id) .css('display','block')
 }
