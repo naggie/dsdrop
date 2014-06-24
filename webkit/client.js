@@ -37,6 +37,7 @@ window.onload = function() {
 
 upload.on('hashStart',function() {
 	choosePage('process')
+	$('#processmsg').text('Analysing file...')
 	var bar = new ProgBar('#hashbar')
 	bar.max = upload.filesize
 	upload.on('hashProgress',bar.set)
@@ -44,6 +45,7 @@ upload.on('hashStart',function() {
 
 upload.on('uploadStart',function() {
 	choosePage('process')
+	$('#processmsg').text('Uploading file...')
 	var bar = new ProgBar('#uploadbar')
 	bar.max = upload.filesize
 	upload.on('uploadProgress',bar.set)
