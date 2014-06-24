@@ -1,6 +1,7 @@
 {
   "name": "dsdrop",
   "main": "index.html",
+  "single-instance":false,
   "window": {
     "toolbar": false,
     "resizable": false,
