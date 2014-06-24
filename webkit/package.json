@@ -3,7 +3,7 @@
   "main": "index.html",
   "single-instance":false,
   "window": {
-    "toolbar": false,
+    "toolbar": true,
     "resizable": false,
     "width": 500,
     "height": 200

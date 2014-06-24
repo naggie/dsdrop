@@ -51,6 +51,10 @@ upload.on('uploadStart',function() {
 	upload.on('uploadProgress',bar.set)
 })
 
+upload.on('publishing',function() {
+	$('#processmsg').text('Publishing..')
+})
+
 // programatic error
 upload.on('error',function(err) {
 	choosePage('error')
