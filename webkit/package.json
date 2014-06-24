@@ -2,9 +2,9 @@
   "name": "dsdrop",
   "main": "index.html",
   "window": {
-    "toolbar": true,
+    "toolbar": false,
     "resizable": false,
     "width": 500,
-    "height": 280
+    "height": 200
   }
 }

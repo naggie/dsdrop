@@ -26,7 +26,7 @@ var clipboard = gui.Clipboard.get()
 
 
 var filepath = gui.App.argv[0]
-var filepath = '/Users/naggie/Downloads/darkbuntu-1031-master.iso'
+//var filepath = '/Users/naggie/Downloads/darkbuntu-1031-master.iso'
 
 window.onload = function() {
 	choosePage('about')
@@ -64,6 +64,8 @@ upload.on('authenticationFailure',function(msg) {
 })
 
 upload.on('done',function(url) {
+	choosePage('success')
+	$('#success input').val(url)
 	clipboard.set(url,'text')
 })
 

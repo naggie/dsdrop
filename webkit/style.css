@@ -9,6 +9,7 @@ body {
 	text-align:center;
 	font-size:22px;
 	color:#888888;
+	margin:30px;
 }
 .disabled{
 	opacity:0.25;
@@ -28,4 +29,12 @@ body {
 	height:100%;
 	background:#888888;
 	width:0%;
+}
+input {
+	font-size:24px;
+	padding:5px;
+	text-align:center;
+	border:1px solid #888888;
+	color:#888888;
+	width:100%;
 }
