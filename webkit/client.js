@@ -21,7 +21,6 @@
 
 var upload = new Upload()
 var clipboard = gui.Clipboard.get()
-//gui.Window.get().showDevTools()
 	//alert($)
 
 
@@ -36,6 +35,8 @@ window.onload = function() {
 		upload.uploadFile(filepath)
 
 	$('#login form').submit(login)
+
+	gui.Window.get().showDevTools()
 }
 
 upload.on('hashStart',function() {
@@ -87,7 +88,6 @@ upload.on('authenticated',function() {
 })
 
 var login = function() {
-	console.log('fired!')
 	upload.login(
 		$('#username').val(),
 		$('#password').val()

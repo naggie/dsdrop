@@ -1,11 +1,15 @@
 {
   "name": "dsdrop",
   "main": "index.html",
-  "single-instance":false,
+  "single-instance": false,
   "window": {
-    "toolbar": true,
+    "toolbar": false,
     "resizable": false,
     "width": 600,
     "height": 260
+  },
+  "dependencies": {
+    "js-yaml": "~3.0.2",
+    "request": "~2.36.0"
   }
 }
