@@ -21,9 +21,10 @@ body {
 	margin:20px 0 20px 0;
 }
 .bar {
-	height:22px;
+	height:36px;
 	width:100%;
 	border:1px solid #888888;
+	padding:2px;
 }
 .bar .filler {
 	height:100%;

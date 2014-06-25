@@ -36,7 +36,7 @@ window.onload = function() {
 
 	$('#login form').submit(login)
 
-	gui.Window.get().showDevTools()
+//	gui.Window.get().showDevTools()
 }
 
 upload.on('hashStart',function() {
