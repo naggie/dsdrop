@@ -32,8 +32,10 @@ window.onload = function() {
 	choosePage('about')
 		choosePage('login')
 
-//	if (filepath)
-//		upload.uploadFile(filepath)
+	if (filepath)
+		upload.uploadFile(filepath)
+
+	$('#login form').submit(login)
 }
 
 upload.on('hashStart',function() {
@@ -81,16 +83,17 @@ upload.on('plsLogin',function(){
 
 upload.on('authenticated',function() {
 	choosePage('process')
-	console.log("\nAuthentication and authorisation successful".green)
+	$('#processmsg').text('Authentication and authorisation succeded!')
 })
 
-$('#login form').submit(function() {
+var login = function() {
+	console.log('fired!')
 	upload.login(
 		$('#username').val(),
 		$('#password').val()
 	)
 	return false
-})
+}
 
 var choosePage = function(id) {
 	$('.page').css('display','none')
