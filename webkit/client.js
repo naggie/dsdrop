@@ -30,9 +30,10 @@ var filepath = gui.App.argv[0]
 
 window.onload = function() {
 	choosePage('about')
+		choosePage('login')
 
-	if (filepath)
-		upload.uploadFile(filepath)
+//	if (filepath)
+//		upload.uploadFile(filepath)
 }
 
 upload.on('hashStart',function() {
@@ -76,12 +77,19 @@ upload.on('done',function(url) {
 upload.on('plsLogin',function(){
 	choosePage('login')
 	$('#loginmsg').text(upload.description)
-
 })
 
 upload.on('authenticated',function() {
 	choosePage('process')
 	console.log("\nAuthentication and authorisation successful".green)
+})
+
+$('#login form').submit(function() {
+	upload.login(
+		$('#username').val(),
+		$('#password').val()
+	)
+	return false
 })
 
 var choosePage = function(id) {

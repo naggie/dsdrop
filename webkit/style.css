@@ -30,11 +30,31 @@ body {
 	background:#888888;
 	width:0%;
 }
-input {
+#success input {
 	font-size:24px;
 	padding:5px;
 	text-align:center;
 	border:1px solid #888888;
 	color:#888888;
 	width:100%;
+}
+
+#login form {
+	width:100%;
+	text-align:right;
+}
+
+#login input {
+	width:60%;
+	right:0;
+	font-size:16px;
+	padding:5px;
+	margin:5px;
+	text-align:left;
+	border:1px solid #888888;
+	color:#888888;
+}
+
+#login input[type=submit] {
+	width:inherit;
 }
