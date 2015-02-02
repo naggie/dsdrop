@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://gitlab.com/naggie/dsdrop/issues"
   },
-  "license": "Apache",
+  "license": "GPVv2",
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/naggie/dsdrop.git"
@@ -40,6 +40,5 @@
   "preferGlobal": true,
   "engines": {
     "node": ">=0.8"
-  },
-  "private": true
+  }
 }
